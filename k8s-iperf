@@ -11,7 +11,7 @@ if [[ $# < 1 ]]; then
 fi
 SERVER_NODE=$1; shift
 
-if [[ ! $(k get node -o name | grep "node/${SERVER_NODE}") ]]; then
+if [[ ! $(kubectl get node -o name | grep "node/${SERVER_NODE}") ]]; then
     >&2 echo "[Error] Node ${SERVER_NODE} not found"
     print_usage
     exit 1
