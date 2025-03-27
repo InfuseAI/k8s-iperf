@@ -17,7 +17,7 @@ if [[ ! $(kubectl get node -o name | grep "node/${SERVER_NODE}") ]]; then
     exit 1
 fi
 
-echo "[Start] iperf server"
+echo "[Start] iperf server on ${SERVER_NODE}"
 if [[ ! $(kubectl get pods -l app=iperf-server 2> /dev/null) ]]; then
     sed "s/{NODE}/${SERVER_NODE}/g" "${DIR}/k8s-iperf.yaml" | kubectl apply -f -
 elif [[ $(kubectl get pod -l app=iperf-server -o jsonpath='{.items[0].metadata.labels.node}') != "${SERVER_NODE}" ]]; then
