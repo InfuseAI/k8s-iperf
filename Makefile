@@ -7,7 +7,7 @@ require-%:
 	fi
 
 server: require-K8S_NODE
-	cat k8s-iperf.yaml | sed -s "s/{NODE}/$(K8S_NODE)/g" | kubectl apply -f -
+	sed "s/{NODE}/$(K8S_NODE)/g" k8s-iperf.yaml | kubectl apply -f -
 
 client: require-K8S_NODE
 	@if [[ "$$(kubectl get pod -l app=iperf-server 2> /dev/null)" == "" ]]; then \
