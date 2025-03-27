@@ -5,7 +5,7 @@ function print_usage() {
     >&2 echo "Usage: `basename $0` <Server Node> [iperf options]"
 }
 
-if [[ $# < 1 ]]; then 
+if [[ $# < 1 ]]; then
     print_usage
     exit 1
 fi
@@ -32,7 +32,7 @@ until $(kubectl get pods -l app=iperf-server -o jsonpath='{.items[0].status.cont
 done
 echo
 
-echo "[Start] iperf clients" 
+echo "[Start] iperf clients"
 CLIENTS=$(kubectl get pods -l app=iperf-client -o name | cut -d'/' -f2)
 for POD in ${CLIENTS}; do
     until $(kubectl get pod ${POD} -o jsonpath='{.status.containerStatuses[0].ready}'); do
@@ -53,7 +53,7 @@ done
 printf " done\n"
 
 echo
-kubectl logs -l app=iperf-server 
+kubectl logs -l app=iperf-server
 echo
 
 echo "[Cleanup]"
