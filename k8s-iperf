@@ -19,7 +19,7 @@ fi
 
 echo "[Start] iperf server"
 if [[ ! $(kubectl get pods -l app=iperf-server 2> /dev/null) ]]; then
-    cat ${DIR}/k8s-iperf.yaml | sed -s "s/{NODE}/${SERVER_NODE}/g" | kubectl apply -f -
+    sed "s/{NODE}/${SERVER_NODE}/g" "${DIR}/k8s-iperf.yaml" | kubectl apply -f -
 elif [[ $(kubectl get pod -l app=iperf-server -o jsonpath='{.items[0].metadata.labels.node}') != "${SERVER_NODE}" ]]; then
     >&2 echo "[Error] Another server had been launched."
     >&2 echo "$(kubectl get pods -l app=iperf-server -o wide)"
